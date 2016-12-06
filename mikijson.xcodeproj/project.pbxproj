@@ -10,6 +10,7 @@
 		8E3377A61DF5B6AB00BE7792 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E3377A51DF5B6AB00BE7792 /* main.cpp */; };
 		8EDCC4171DF6950100A05C3A /* fileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCC4151DF6950100A05C3A /* fileIO.cpp */; };
 		8EDCC41A1DF6CAA000A05C3A /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCC4181DF6CAA000A05C3A /* test.cpp */; };
+		8EDCC4201DF6EBB700A05C3A /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCC41E1DF6EBB700A05C3A /* parser.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		8EDCC4161DF6950100A05C3A /* fileIO.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fileIO.hpp; sourceTree = "<group>"; };
 		8EDCC4181DF6CAA000A05C3A /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
 		8EDCC4191DF6CAA000A05C3A /* test.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = test.hpp; sourceTree = "<group>"; };
+		8EDCC41E1DF6EBB700A05C3A /* parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parser.cpp; sourceTree = "<group>"; };
+		8EDCC41F1DF6EBB700A05C3A /* parser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = parser.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 		8E3377A41DF5B6AB00BE7792 /* mikijson */ = {
 			isa = PBXGroup;
 			children = (
+				8EDCC41E1DF6EBB700A05C3A /* parser.cpp */,
+				8EDCC41F1DF6EBB700A05C3A /* parser.hpp */,
 				8E3377A51DF5B6AB00BE7792 /* main.cpp */,
 				8EDCC4151DF6950100A05C3A /* fileIO.cpp */,
 				8EDCC4161DF6950100A05C3A /* fileIO.hpp */,
@@ -129,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EDCC4201DF6EBB700A05C3A /* parser.cpp in Sources */,
 				8E3377A61DF5B6AB00BE7792 /* main.cpp in Sources */,
 				8EDCC4171DF6950100A05C3A /* fileIO.cpp in Sources */,
 				8EDCC41A1DF6CAA000A05C3A /* test.cpp in Sources */,
