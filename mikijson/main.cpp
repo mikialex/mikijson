@@ -14,9 +14,8 @@
 #include "parser.hpp"
 
 
-
-
 using namespace std;
+
 
 //JSON-text = ws value ws
 //ws = *(%x20 / %x09 / %x0A / %x0D)
@@ -31,15 +30,22 @@ string test;
 vector<string> raw;
 
 int main(int argc, const char * argv[]) {
-    string filename="/Users/mikialex/Desktop/testjson1.json";
-    vector<string> filecontentByLine=readFiletoStringVectorByLine(filename);
-    string filecontent=readFiletoString(filename);
-    for(auto b=filecontentByLine.cbegin();b!=filecontentByLine.cend();++b){
-        cout<<*b<<"\n";
-    }
+//    string filename="/Users/mikialex/Desktop/testjson1.json";
+//    vector<string> filecontentByLine=readFiletoStringVectorByLine(filename);
+//    string filecontent=readFiletoString(filename);
+//    for(auto b=filecontentByLine.cbegin();b!=filecontentByLine.cend();++b){
+//        cout<<*b<<"\n";
+//    }
     
-//    string a="   wer";
-//    cout<<a;
+    string a="   wer";
+    cout<<a<<endl;
+    
+    jsonContext test;
+    test.json=a;
+    
+    cout<<test.json<<endl;
+    jsonParseWhitespace(test);
+    cout<<test.json<<endl;
     
     
 //    jsonContext testcontext=new jsonContext(a);

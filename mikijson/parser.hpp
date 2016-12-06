@@ -51,48 +51,16 @@ public:
 jsonType getJsonType(const jsonNode node);
 
 
-static void jsonParseWhitespace(jsonContext c){
-    string raw = c.json;
-    for(auto b=raw.cbegin();b!=raw.cend();++b){
-        cout<<*b<<"\n";
-    };
-    auto p=raw.cbegin();
-    while(*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r'){
-        p++;
-    }
-    string back;
-    for(auto d=p;d!=raw.cend();++d){
-        back.push_back(*d);
-    }
-    c.json = back;
-};
-
-static int jsonParseNull(jsonContext c,jsonNode v){
-    //    if (c.json[0] != 'u' || c->json[1] != 'l' || c->json[2] != 'l')
-    //        return LEPT_PARSE_INVALID_VALUE;
-    //    c->json += 3;
-    //    v->type = LEPT_NULL;
-    return JSON_PARSE_OK;
-};
+void jsonParseWhitespace(jsonContext &c);
+int jsonParseTrue(jsonContext &c,jsonNode &v);
+int jsonParseFalse(jsonContext &c,jsonNode &v);
+int jsonParseNull(jsonContext &c,jsonNode &v);
 
 //解析json节点
-static int jsonParseNode(jsonContext c, jsonNode v) {
-    switch (*c.json.cbegin()) {
-        case 'n':  return jsonParseNull(c, v);
-        case '\0': return JSON_PARSE_EXPECT_VALUE;
-        default:   return JSON_PARSE_INVALID_VALUE;
-    }
-};
+int jsonParseNode(jsonContext &c, jsonNode &v);
 
 //从json字符串解析json树
-int jsonParse(jsonNode rootNode,  const string jsonRawString){
-    jsonContext c;
-    //    assert(v != NULL);
-    c.json = jsonRawString;
-    rootNode.type = JSON_NULL;//如果失败正好是json_null
-    jsonParseWhitespace(c);
-    return jsonParseNode(c, rootNode);
-};
+int jsonParse(jsonNode rootNode,  const string jsonRawString);
 
 
 
