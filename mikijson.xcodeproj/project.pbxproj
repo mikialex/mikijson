@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8E3377A61DF5B6AB00BE7792 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E3377A51DF5B6AB00BE7792 /* main.cpp */; };
+		8EDCC4171DF6950100A05C3A /* fileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCC4151DF6950100A05C3A /* fileIO.cpp */; };
+		8EDCC41A1DF6CAA000A05C3A /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCC4181DF6CAA000A05C3A /* test.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		8E3377A21DF5B6AB00BE7792 /* mikijson */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mikijson; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E3377A51DF5B6AB00BE7792 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		8EDCC4151DF6950100A05C3A /* fileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileIO.cpp; sourceTree = "<group>"; };
+		8EDCC4161DF6950100A05C3A /* fileIO.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fileIO.hpp; sourceTree = "<group>"; };
+		8EDCC4181DF6CAA000A05C3A /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
+		8EDCC4191DF6CAA000A05C3A /* test.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = test.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				8E3377A51DF5B6AB00BE7792 /* main.cpp */,
+				8EDCC4151DF6950100A05C3A /* fileIO.cpp */,
+				8EDCC4161DF6950100A05C3A /* fileIO.hpp */,
+				8EDCC4181DF6CAA000A05C3A /* test.cpp */,
+				8EDCC4191DF6CAA000A05C3A /* test.hpp */,
 			);
 			path = mikijson;
 			sourceTree = "<group>";
@@ -120,6 +130,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E3377A61DF5B6AB00BE7792 /* main.cpp in Sources */,
+				8EDCC4171DF6950100A05C3A /* fileIO.cpp in Sources */,
+				8EDCC41A1DF6CAA000A05C3A /* test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +258,7 @@
 				8E3377AB1DF5B6AB00BE7792 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
