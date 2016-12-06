@@ -60,7 +60,7 @@ int jsonParseNull(jsonContext &c,jsonNode &v);
 int jsonParseNode(jsonContext &c, jsonNode &v);
 
 //从json字符串解析json树
-int jsonParse(jsonNode rootNode,  const string jsonRawString);
+int jsonParse(jsonNode &rootNode,  const string &jsonRawString);
 
 
 

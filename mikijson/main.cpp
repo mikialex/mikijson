@@ -37,16 +37,16 @@ int main(int argc, const char * argv[]) {
 //        cout<<*b<<"\n";
 //    }
     
-    string a="   wer";
-    cout<<a<<endl;
+    string a="   tru   ";
+    cout<<"原始字符"<<a<<endl;
     
-    jsonContext test;
-    test.json=a;
     
-    cout<<test.json<<endl;
-    jsonParseWhitespace(test);
-    cout<<test.json<<endl;
+    jsonNode root;
+
     
+    cout<<jsonParse(root, a);
+    
+    int q;
     
 //    jsonContext testcontext=new jsonContext(a);
 //    cout<<jsonParseWhitespace(testcontext);
