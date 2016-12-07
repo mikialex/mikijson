@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <stdlib.h>
 
 #include "fileIO.hpp"
 #include "parser.hpp"
@@ -30,26 +31,17 @@ string test;
 vector<string> raw;
 
 int main(int argc, const char * argv[]) {
-//    string filename="/Users/mikialex/Desktop/testjson1.json";
-//    vector<string> filecontentByLine=readFiletoStringVectorByLine(filename);
-//    string filecontent=readFiletoString(filename);
-//    for(auto b=filecontentByLine.cbegin();b!=filecontentByLine.cend();++b){
-//        cout<<*b<<"\n";
-//    }
     
-    string a="   true   ";
-    cout<<"原始字符"<<a<<endl;
+    string a="   0.23   ";
+    cout<<"原始字符:"<<a<<endl;
     
     
     jsonNode root;
 
     
-    cout<<jsonParse(root, a);
+    cout<<"parse结果："<<jsonParse(root, a)<<endl;
+    cout<<"节点类型："<<root.type<<endl;
+    cout<<"节点数值："<<root.n<<endl;
     
-//    jsonContext testcontext=new jsonContext(a);
-//    cout<<jsonParseWhitespace(testcontext);
-//    cin>>test;
-//    // insert code here...
-//    cout << filecontent;
     return 0;
 }

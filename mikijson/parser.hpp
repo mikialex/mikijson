@@ -38,7 +38,7 @@ enum jsonParseResult{
 //json节点
 class jsonNode{
 public:
-    string s;
+//    string s;
     double n;//对于数值节点，存放节点数值
     jsonType type;//节点类型
 };

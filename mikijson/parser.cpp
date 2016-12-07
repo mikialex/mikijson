@@ -47,14 +47,45 @@ int jsonParseFalse(jsonContext &c,jsonNode &v){
     return JSON_PARSE_OK;
 };
 
+inline bool isDigital(char c){
+    if (c == '0' || c == '1'||c == '2'||c == '3'||c == '4' || c == '5'||c == '6'||c == '7'||c == '8'||c == '9'){
+        return true;
+    }
+    return false;
+};
+
+inline bool isDigitalWithoutZero(char c){
+    if ( c == '1'||c == '2'||c == '3'||c == '4' || c == '5'||c == '6'||c == '7'||c == '8'||c == '9'){
+        return true;
+    }
+    return false;
+};
+
 int jsonParseNumber(jsonContext &c,jsonNode &v){
-//    char* end;
-//    /* \TODO validate number */
-//    v->n = strtod(c->json, &end);
-//    if (c->json == end)
-//        return LEPT_PARSE_INVALID_VALUE;
-//    c->json = end;
-//    v.type = JSON_NUMBER;
+    auto p=c.currentP;
+    
+    if (*p == '-') p++;
+    if (*p == '0') p++;
+    else {
+        if (!isDigitalWithoutZero(*p)) return JSON_PARSE_INVALID_VALUE;
+        for (p++; isDigital(*p); p++);
+    }
+    
+    if (*p == '.') {
+        p++;
+        if (!isDigital(*p)) return JSON_PARSE_INVALID_VALUE;
+        for (p++; isDigital(*p); p++);
+    }
+    if (*p == 'e' || *p == 'E') {
+        p++;
+        if (*p == '+' || *p == '-') p++;
+        if (!isDigital(*p)) return JSON_PARSE_INVALID_VALUE;
+        for (p++; isDigital(*p); p++);
+    }
+    
+    v.n = stod(c.json);
+    c.currentP=p;
+    v.type = JSON_NUMBER;
     return JSON_PARSE_OK;
 }
 
