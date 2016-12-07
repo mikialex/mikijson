@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
 //        cout<<*b<<"\n";
 //    }
     
-    string a="   tru   ";
+    string a="   true   ";
     cout<<"原始字符"<<a<<endl;
     
     
@@ -45,8 +45,6 @@ int main(int argc, const char * argv[]) {
 
     
     cout<<jsonParse(root, a);
-    
-    int q;
     
 //    jsonContext testcontext=new jsonContext(a);
 //    cout<<jsonParseWhitespace(testcontext);

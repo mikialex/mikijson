@@ -38,13 +38,16 @@ enum jsonParseResult{
 //json节点
 class jsonNode{
 public:
-    jsonType type;
+    string s;
+    double n;//对于数值节点，存放节点数值
+    jsonType type;//节点类型
 };
 
 //json文本内容
 class jsonContext{
 public:
-    string json;
+    string json;//文本内容
+    string::iterator currentP;//当前解析位置
 };
 
 //获取json节点数据类型
@@ -55,6 +58,7 @@ void jsonParseWhitespace(jsonContext &c);
 int jsonParseTrue(jsonContext &c,jsonNode &v);
 int jsonParseFalse(jsonContext &c,jsonNode &v);
 int jsonParseNull(jsonContext &c,jsonNode &v);
+int jsonParseNumber(jsonContext &c,jsonNode &v);
 
 //解析json节点
 int jsonParseNode(jsonContext &c, jsonNode &v);
