@@ -48,6 +48,10 @@ string jsonParseResultToString(jsonParseResult t){
             return "JSON_PARSE_MISS_QUOTATION_MARK";
         case JSON_PARSE_MISS_COMMA_OR_SQUARE_BRACKET:
             return "JSON_PARSE_MISS_COMMA_OR_SQUARE_BRACKET";
+        case JSON_PARSE_ERROR_OBJECT_NAME:
+            return "JSON_PARSE_ERROR_OBJECT_NAME";
+        case JSON_PARSE_MISS_COMMA_OR_CURLY_BRACKET:
+            return "JSON_PARSE_MISS_COMMA_OR_CURLY_BRACKET";
         default:
             return "unknow result";
     }
@@ -164,16 +168,26 @@ jsonParseResult jsonParseString(jsonContext &c,jsonNode &v){
         p++;
     }
 };
-
-//jsonParseResult jsonArrayAddNode(jsonContext &c,jsonNode &v){
-//    jsonNode node;
-//    jsonParseResult result=jsonParseNode(c, node);
-//    if(result==JSON_PARSE_OK){
-//        (*(v.array)).nodes.push_back(node);
-//    }else{
-//        return JSON_PARSE_INVALID_VALUE;
-//    }
-//}
+jsonParseResult jsonParseStringWithOutNode(jsonContext &c,string &out){
+    auto p=c.currentP;
+    string s;
+    p++;
+    for (;;) {
+        char ch = *p;
+        switch (ch) {
+            case '\"':
+                p++;
+                c.currentP=p;
+                out=s;
+                return JSON_PARSE_OK;
+            case '\0':
+                return JSON_PARSE_MISS_QUOTATION_MARK;
+            default:
+                s.push_back(ch);
+        }
+        p++;
+    }
+};
 
 jsonParseResult jsonParseArray(jsonContext &c,jsonNode &v){
     auto p=c.currentP;
@@ -198,7 +212,7 @@ jsonParseResult jsonParseArray(jsonContext &c,jsonNode &v){
             return JSON_PARSE_INVALID_VALUE;
         }
         
-    if(*p==','){//还有内容
+        if(*p==','){//还有内容
             p++;
             c.currentP=p;
             continue;
@@ -216,6 +230,56 @@ jsonParseResult jsonParseArray(jsonContext &c,jsonNode &v){
 }
 
 
+jsonParseResult jsonParseObject(jsonContext &c,jsonNode &v){
+    auto p=c.currentP;
+    jsonParseResult ret;
+    p++;
+    c.currentP=p;
+    jsonParseWhitespace(c);
+    if(*p=='}'){ //空对象
+        p++;
+        v.type = JSON_ARRAY;   //node的type是object，object却是空的，那就是{}
+        return JSON_PARSE_OK;
+    }
+    for(;;){
+        string name;
+        if(jsonParseStringWithOutNode(c,name)==JSON_PARSE_OK){
+            p=c.currentP;
+            p++;c.currentP++;
+            jsonNode node;
+            node.name=name;
+            jsonParseWhitespace(c);
+            ret=jsonParseNode(c, node);
+            jsonParseWhitespace(c);
+            p=c.currentP;
+            if(ret==JSON_PARSE_OK){
+                v.objectNodes.push_back(node);
+            }else{
+                return JSON_PARSE_INVALID_VALUE;
+            }
+            
+            if(*p==','){//还有内容
+                p++;
+                c.currentP=p;
+                continue;
+            }else if(*p=='}'){//结束
+                p++;
+                c.currentP=p;
+                v.type = JSON_OBJECT;
+                return JSON_PARSE_OK;
+            }else{
+                ret= JSON_PARSE_MISS_COMMA_OR_CURLY_BRACKET;
+                break;
+            }
+            
+        }else{
+            return JSON_PARSE_ERROR_OBJECT_NAME;
+        }
+    }
+    
+    return ret;
+}
+
 
 //解析json节点
 jsonParseResult jsonParseNode(jsonContext &c, jsonNode &v) {
@@ -227,8 +291,9 @@ jsonParseResult jsonParseNode(jsonContext &c, jsonNode &v) {
         case 'n':  return jsonParseNull(c, v);
         case '"':  return jsonParseString(c, v);
         case '[':  return jsonParseArray(c, v);
+        case '{':  return jsonParseObject(c, v);
         default:   return jsonParseNumber(c, v);
-        //        default:   return JSON_PARSE_INVALID_VALUE;
+            //        default:   return JSON_PARSE_INVALID_VALUE;
     }
 };
 
@@ -239,7 +304,7 @@ jsonParseResult jsonParse(jsonNode &rootNode,  const string &jsonRawString){
     c.json = jsonRawString;
     c.currentP=c.json.begin();
     jsonParseResult ret;
-//    assert(v != NULL);
+    //    assert(v != NULL);
     rootNode.type = JSON_NULL;
     jsonParseWhitespace(c);
     if ((ret = jsonParseNode(c, rootNode)) == JSON_PARSE_OK) {

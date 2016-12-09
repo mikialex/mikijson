@@ -32,12 +32,13 @@ vector<string> raw;
 
 int main(int argc, const char * argv[]) {
     
-    string a="   [1,2  ";
+    string a="  {\"number\":[123,123,{\"sds\":234}]}  ";
     cout<<"原始字符:"<<a<<endl;
-    
-    
+    string file="/Users/mikialex/Desktop/testjson1.json";
+    string b=readFiletoString(file);
     jsonNode root;
-    cout<<"parse结果："<<jsonParseResultToString(jsonParse(root, a))<<endl;
+    
+    cout<<"parse结果："<<jsonParseResultToString(jsonParse(root, b))<<endl;
     cout<<"节点类型："<<jsonTypeToString(root.type)<<endl;
     cout<<"节点数值："<<root.n<<endl;
     cout<<"节点字符："<<root.s<<endl;

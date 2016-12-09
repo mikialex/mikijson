@@ -35,7 +35,9 @@ enum jsonParseResult{
     JSON_PARSE_INVALID_VALUE,
     JSON_PARSE_ROOT_NOT_SINGULAR,
     JSON_PARSE_MISS_QUOTATION_MARK,
-    JSON_PARSE_MISS_COMMA_OR_SQUARE_BRACKET
+    JSON_PARSE_MISS_COMMA_OR_SQUARE_BRACKET,
+    JSON_PARSE_ERROR_OBJECT_NAME,
+    JSON_PARSE_MISS_COMMA_OR_CURLY_BRACKET
 };
 string jsonParseResultToString(jsonParseResult t);
 
@@ -44,7 +46,9 @@ string jsonParseResultToString(jsonParseResult t);
 //json节点
 class jsonNode{
 public:
-    vector<jsonNode> arrayNodes;//数组节点，存放数组
+    string name;//名称
+    vector<jsonNode> objectNodes;//对象节点，存放对象成员
+    vector<jsonNode> arrayNodes;//数组节点，存放数组成员
     string s; //字符串节点，存放字符串
     double n;//数值节点，存放节点数值
     jsonType type;//节点类型
@@ -72,7 +76,9 @@ jsonParseResult jsonParseFalse(jsonContext &c,jsonNode &v);
 jsonParseResult jsonParseNull(jsonContext &c,jsonNode &v);
 jsonParseResult jsonParseNumber(jsonContext &c,jsonNode &v);
 jsonParseResult jsonParseString(jsonContext &c,jsonNode &v);
+jsonParseResult jsonParseStringWithOutNode(jsonContext &c,string &out);
 jsonParseResult jsonParseArray(jsonContext &c,jsonNode &v);
+jsonParseResult jsonParseObject(jsonContext &c,jsonNode &v);
 
 //解析json节点
 jsonParseResult jsonParseNode(jsonContext &c, jsonNode &v);
