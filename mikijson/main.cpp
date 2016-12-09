@@ -32,16 +32,15 @@ vector<string> raw;
 
 int main(int argc, const char * argv[]) {
     
-    string a="   0.23   ";
+    string a="   \"\"   ";
     cout<<"原始字符:"<<a<<endl;
     
     
     jsonNode root;
-
-    
-    cout<<"parse结果："<<jsonParse(root, a)<<endl;
-    cout<<"节点类型："<<root.type<<endl;
+    cout<<"parse结果："<<jsonParseResultToString(jsonParse(root, a))<<endl;
+    cout<<"节点类型："<<jsonTypeToString(root.type)<<endl;
     cout<<"节点数值："<<root.n<<endl;
+    cout<<"节点字符："<<root.s<<endl;
     
     return 0;
 }

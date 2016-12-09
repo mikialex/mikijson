@@ -10,6 +10,7 @@
 #define parser_hpp
 
 #include <iostream>
+#include <vector>
 #include <stdio.h>
 #include <string>
 
@@ -25,22 +26,32 @@ enum jsonType{
     JSON_ARRAY,
     JSON_OBJECT
 };
+string jsonTypeToString(jsonType t);
 
 //json parse 结果
 enum jsonParseResult{
     JSON_PARSE_OK = 0,
     JSON_PARSE_EXPECT_VALUE,
     JSON_PARSE_INVALID_VALUE,
-    JSON_PARSE_ROOT_NOT_SINGULAR
+    JSON_PARSE_ROOT_NOT_SINGULAR,
+    JSON_PARSE_MISS_QUOTATION_MARK
 };
+string jsonParseResultToString(jsonParseResult t);
 
+class jsonArrayType;//前向声明
 
 //json节点
 class jsonNode{
 public:
-//    string s;
-    double n;//对于数值节点，存放节点数值
+    jsonArrayType* array;
+    string s; //字符串节点，存放字符串
+    double n;//数值节点，存放节点数值
     jsonType type;//节点类型
+};
+
+class jsonArrayType{
+public:
+    vector<jsonNode> content;
 };
 
 //json文本内容
@@ -55,16 +66,17 @@ jsonType getJsonType(const jsonNode node);
 
 
 void jsonParseWhitespace(jsonContext &c);
-int jsonParseTrue(jsonContext &c,jsonNode &v);
-int jsonParseFalse(jsonContext &c,jsonNode &v);
-int jsonParseNull(jsonContext &c,jsonNode &v);
-int jsonParseNumber(jsonContext &c,jsonNode &v);
+jsonParseResult jsonParseTrue(jsonContext &c,jsonNode &v);
+jsonParseResult jsonParseFalse(jsonContext &c,jsonNode &v);
+jsonParseResult jsonParseNull(jsonContext &c,jsonNode &v);
+jsonParseResult jsonParseNumber(jsonContext &c,jsonNode &v);
+jsonParseResult jsonParseString(jsonContext &c,jsonNode &v);
 
 //解析json节点
-int jsonParseNode(jsonContext &c, jsonNode &v);
+jsonParseResult jsonParseNode(jsonContext &c, jsonNode &v);
 
 //从json字符串解析json树
-int jsonParse(jsonNode &rootNode,  const string &jsonRawString);
+jsonParseResult jsonParse(jsonNode &rootNode,  const string &jsonRawString);
 
 
 
