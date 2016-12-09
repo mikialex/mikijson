@@ -10,6 +10,16 @@
 
 string jsonTypeToString(jsonType t){
     switch (t) {
+        case JSON_NULL:
+            return "JSON_NULL";
+        case JSON_TRUE:
+            return "JSON_TRUE";
+        case JSON_FALSE:
+            return "JSON_FALSE";
+        case JSON_NUMBER:
+            return "数字JSON_NUMBER";
+        case JSON_OBJECT:
+            return "对象JSON_OBJECT";
         case JSON_STRING:
             return "字符串JSON_STRING";
         case JSON_ARRAY:
@@ -36,6 +46,8 @@ string jsonParseResultToString(jsonParseResult t){
             return "JSON_PARSE_ROOT_NOT_SINGULAR";
         case JSON_PARSE_MISS_QUOTATION_MARK:
             return "JSON_PARSE_MISS_QUOTATION_MARK";
+        case JSON_PARSE_MISS_COMMA_OR_SQUARE_BRACKET:
+            return "JSON_PARSE_MISS_COMMA_OR_SQUARE_BRACKET";
         default:
             return "unknow result";
     }
@@ -96,6 +108,7 @@ inline bool isDigitalWithoutZero(char c){
 
 jsonParseResult jsonParseNumber(jsonContext &c,jsonNode &v){
     auto p=c.currentP;
+    auto pOld=p;
     
     //判断数字是否合法，同时推进解析迭代器前进
     //小数点前
@@ -118,8 +131,12 @@ jsonParseResult jsonParseNumber(jsonContext &c,jsonNode &v){
         if (!isDigital(*p)) return JSON_PARSE_INVALID_VALUE;//一定是数字
         for (p++; isDigital(*p); p++);//一串数字
     }
-    
-    v.n = stod(c.json);
+    string numParseString;;
+    while(pOld!=p){
+        numParseString.push_back(*pOld);
+        pOld++;
+    }
+    v.n = stod(numParseString);
     c.currentP=p;
     v.type = JSON_NUMBER;
     return JSON_PARSE_OK;
@@ -148,18 +165,69 @@ jsonParseResult jsonParseString(jsonContext &c,jsonNode &v){
     }
 };
 
+//jsonParseResult jsonArrayAddNode(jsonContext &c,jsonNode &v){
+//    jsonNode node;
+//    jsonParseResult result=jsonParseNode(c, node);
+//    if(result==JSON_PARSE_OK){
+//        (*(v.array)).nodes.push_back(node);
+//    }else{
+//        return JSON_PARSE_INVALID_VALUE;
+//    }
+//}
+
+jsonParseResult jsonParseArray(jsonContext &c,jsonNode &v){
+    auto p=c.currentP;
+    jsonParseResult ret;
+    p++;
+    c.currentP=p;
+    jsonParseWhitespace(c);
+    if(*p==']'){ //空数组
+        p++;
+        v.type = JSON_ARRAY;   //node的type是array，array却是空的，那就是[]
+        return JSON_PARSE_OK;
+    }
+    for(;;){
+        jsonNode node;
+        jsonParseWhitespace(c);
+        ret=jsonParseNode(c, node);
+        jsonParseWhitespace(c);
+        p=c.currentP;
+        if(ret==JSON_PARSE_OK){
+            v.arrayNodes.push_back(node);
+        }else{
+            return JSON_PARSE_INVALID_VALUE;
+        }
+        
+    if(*p==','){//还有内容
+            p++;
+            c.currentP=p;
+            continue;
+        }else if(*p==']'){//结束
+            p++;
+            c.currentP=p;
+            v.type = JSON_ARRAY;
+            return JSON_PARSE_OK;
+        }else{
+            ret= JSON_PARSE_MISS_COMMA_OR_SQUARE_BRACKET;
+            break;
+        }
+    }
+    return ret;
+}
+
 
 
 //解析json节点
 jsonParseResult jsonParseNode(jsonContext &c, jsonNode &v) {
     
     switch (*c.currentP) {
+        case '\0': return JSON_PARSE_EXPECT_VALUE;
         case 't': return jsonParseTrue(c,v);
         case 'f': return jsonParseFalse(c, v);
         case 'n':  return jsonParseNull(c, v);
-        default:   return jsonParseNumber(c, v);
         case '"':  return jsonParseString(c, v);
-        case '\0': return JSON_PARSE_EXPECT_VALUE;
+        case '[':  return jsonParseArray(c, v);
+        default:   return jsonParseNumber(c, v);
         //        default:   return JSON_PARSE_INVALID_VALUE;
     }
 };

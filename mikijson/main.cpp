@@ -32,7 +32,7 @@ vector<string> raw;
 
 int main(int argc, const char * argv[]) {
     
-    string a="   \"\"   ";
+    string a="   [1,2  ";
     cout<<"原始字符:"<<a<<endl;
     
     
@@ -42,5 +42,6 @@ int main(int argc, const char * argv[]) {
     cout<<"节点数值："<<root.n<<endl;
     cout<<"节点字符："<<root.s<<endl;
     
+
     return 0;
 }
